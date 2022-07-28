@@ -1,7 +1,11 @@
 require './person'
+
 require './student'
+
 require './teacher'
+
 require './book'
+
 require './rental'
 
 class App
@@ -26,11 +30,11 @@ class App
 
     type = gets.chomp.to_i
 
-    puts 'Invalide input' if type != 1 && type != 2
+    puts 'Invalid input' if type != 1 && type != 2
 
-    add_student if type == 1 # Create a student if user entered 1
+    add_student if type == 1 # Create a student if the user entered 1
 
-    add_teacher if type == 2 # Create a teacher if user entered 2
+    add_teacher if type == 2 # Create a teacher if the user entered 2
   end
 
   def list_people(show_index: false)
@@ -46,13 +50,13 @@ class App
   def add_student
     print 'Please enter the name of the student: '
 
-    name = gets.chomp.to_s # convert to a string
+    name = gets.chomp.to_s
 
-    print 'Please enter the age of the student: '
+    print 'Plese enter the age of the student: '
 
-    age = gets.chomp.to_i # convert to a integer
+    age = gets.chomp.to_i
 
-    print 'Do you have parent permission? [Y/N]: '
+    print 'Does he or she has parent permission? [Y/N]: '
 
     parent_permission = gets.chomp.to_s.downcase == 'y'
 
@@ -72,7 +76,7 @@ class App
 
     age = gets.chomp.to_i
 
-    print "Please enter teacher's specialization: "
+    print "Please enter the teacher's specialization: "
 
     specilization = gets.chomp.to_s
 
@@ -80,7 +84,7 @@ class App
 
     @persons << teacher
 
-    puts "Student with id #{teacher.id} created"
+    puts "Teacher with id #{teacher.id} created"
   end
 
   def list_books(show_index: false)
@@ -112,27 +116,21 @@ class App
   def list_rentals_by_person_id
     puts 'No person entry found' if @persons.empty?
 
-    print 'Please enter the person ID: '
+    print 'Enter person ID: '
 
     id = gets.chomp.to_i
 
     @persons.each do |person|
-      if person.id == id
+      next unless person.id == id
 
-        person.rentals.each do |rental|
-          puts "Date: #{rental.date}, Book: \"#{rental.book.title}\" by #{rental.book.author} "
-        end
-
-      else
-
-        puts "No rentals found for person with id #{id}"
-
+      person.rentals.each do |rental|
+        puts "Date: #{rental.date}, Book: \"#{rental.book.title}\" by #{rental.book.author} "
       end
     end
   end
 
   def add_rental
-    puts 'Please select a book from the following list by number'
+    puts 'Select a book from the following list by number'
 
     list_books(show_index: true)
 
@@ -140,13 +138,13 @@ class App
 
     puts 'Invalid input!' if !(book.is_a? Integer) && book >= @books.length
 
-    puts 'Please select a person from the following list by number (not id)'
+    puts 'Select a person from the following list by number (not id)'
 
     list_people(show_index: true)
 
     person = gets.chomp.to_i
 
-    puts 'Invalide input!' if !(person.is_a? Integer) && person >= @people.length
+    puts 'Invalid input!' if !(person.is_a? Integer) && person >= @people.length
 
     print 'Please enter the date: '
 
