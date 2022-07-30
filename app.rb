@@ -1,3 +1,5 @@
+require 'pry'
+
 require './person'
 
 require './student'
@@ -32,7 +34,7 @@ class App
 
     puts 'Invalid input' if type != 1 && type != 2
 
-    add_student if type == 1 # Create a student if the user entered 1
+    add_student if type == '1' # Create a student if the user entered 1
 
     add_teacher if type == 2 # Create a teacher if the user entered 2
   end
