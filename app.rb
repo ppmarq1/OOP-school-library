@@ -1,3 +1,5 @@
+require 'pry'
+
 require './person'
 
 require './student'
