@@ -52,6 +52,11 @@ Clone the repository from this [link](https://github.com/ppmarq1/OOP-school-libr
 - LinkedIn: https://br.linkedin.com/in/pedroalmeidamarques/
 
 
+👤 **Aladdin Aslalem**
+- GitHub:[@AlaaAlsalem](https://github.com/AlaaAlsalem)
+- Linkedin:[AladdinAlsalem](https://www.linkedin.com/in/aladdin-alsalem/)
+
+
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!!
