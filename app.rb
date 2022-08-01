@@ -17,16 +17,6 @@ class App
     @books = []
   end
 
-  def run
-    actions.each { |key, value| puts "#{key}: #{value}" }
-
-    action = gets.chomp.to_i
-
-    action(action)
-  end
-
-  private
-
   def add_person
     puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
 
