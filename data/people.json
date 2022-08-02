@@ -1,0 +1,16 @@
+[
+  {
+    "type": "Student",
+    "classroom": "Grade 12",
+    "name": "Pedro",
+    "age": 34,
+    "parent_permission": true
+  },
+  {
+    "type": "Student",
+    "classroom": "Grade 12",
+    "name": "Pedro",
+    "age": 15,
+    "parent_permission": true
+  }
+]

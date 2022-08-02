@@ -1,149 +1,213 @@
-require 'pry'
-
 require './person'
+
+require './capitalize_decorator'
+
+require './trimmer_decorator'
 
 require './student'
 
-require './teacher'
+require './classroom'
 
-require './book'
+require './teacher'
 
 require './rental'
 
+require './book'
+
+require './data/data_abstraction'
+
 class App
   def initialize
-    @persons = []
+    @people = []
 
     @books = []
+
+    @rentals = []
+  end
+
+  def list_books
+    puts 'There are no books to show! Please add a book.' if @books.empty?
+
+    @books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
+
+    puts
+
+    puts
+  end
+
+  def list_people
+    puts 'There are no people to show! Please add a student or a teacher.' if @people.empty?
+
+    @people.each { |person| puts "[#{person.class}] Name: #{person.name}, Id: #{person.id}, Age: #{person.age}" }
+
+    puts
+
+    puts
   end
 
   def add_person
-    puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
+    print 'Do you want to create a student (1) or teacher (2)? [Input the number]: '
 
-    type = gets.chomp.to_i
+    choice = gets.chomp
 
-    puts 'Invalid input' if type != 1 && type != 2
+    case choice
 
-    add_student if type == 1 # Create a student if the user entered 1
+    when '1'
 
-    add_teacher if type == 2 # Create a teacher if the user entered 2
-  end
+      create_student
 
-  def list_people(show_index: false)
-    @persons.each_with_index do |person, index|
-      result = "[#{person.class.name}] ID: #{person.id}, Name: #{person.name}, Age: #{person.age}"
+    when '2'
 
-      result = "#{index}) " + result if show_index
+      create_teacher
 
-      puts result
+    else
+
+      puts 'Invalid input! Please enter 1 or 2'
+
     end
   end
 
-  def add_student
-    print 'Please enter the name of the student: '
-
-    name = gets.chomp.to_s
-
-    print 'Plese enter the age of the student: '
+  def create_student
+    print 'Age: '
 
     age = gets.chomp.to_i
 
-    print 'Does he or she has parent permission? [Y/N]: '
+    print 'Name: '
 
-    parent_permission = gets.chomp.to_s.downcase == 'y'
+    name = gets.chomp
 
-    student = Student.new(age, name, parent_permission: parent_permission)
+    print 'Has parent permission? [Y/N]: '
 
-    @persons << student
+    permission = gets.chomp.downcase
 
-    puts "Student with id #{student.id} created"
+    parent_permission = permission == 'y'
+
+    classroom = 'Grade 45'
+
+    student = Student.new(classroom, age, name, parent_permission)
+
+    @people << student
+
+    save_student(classroom, age, name, parent_permission)
+
+    puts 'Person/Student created successfully'
+
+    puts
+
+    puts
   end
 
-  def add_teacher
-    print 'Please enter the name of the teacher: '
-
-    name = gets.chomp.to_s
-
-    print 'Please enter the age of the teacher: '
+  def create_teacher
+    print 'Age: '
 
     age = gets.chomp.to_i
 
-    print "Please enter the teacher's specialization: "
+    print 'Name: '
 
-    specilization = gets.chomp.to_s
+    name = gets.chomp
 
-    teacher = Teacher.new(specilization, age, name)
+    print 'Specialization: '
 
-    @persons << teacher
+    specialization = gets.chomp
 
-    puts "Teacher with id #{teacher.id} created"
-  end
+    teacher = Teacher.new(specialization, age, name)
 
-  def list_books(show_index: false)
-    @books.each_with_index do |book, index|
-      result = "Title: \"#{book.title}\", Author: #{book.author}"
+    @people << teacher
 
-      result = " #{index}) " + result if show_index
+    save_teacher(specialization, age, name)
 
-      puts result
-    end
+    puts 'Person/Teacher created successfully'
+
+    puts
+
+    puts
   end
 
   def add_book
-    print 'Please enter the name of the book: '
+    print 'Title: '
 
-    name = gets.chomp.to_s
+    title = gets.chomp
 
-    print 'Please enter the author of the book: '
+    print 'Author: '
 
-    author = gets.chomp.to_s
+    author = gets.chomp
 
-    book = Book.new(name, author)
+    book = Book.new(title, author)
 
     @books << book
 
+    save_book(title, author)
+
     puts 'Book created successfully'
-  end
 
-  def list_rentals_by_person_id
-    puts 'No person entry found' if @persons.empty?
+    puts
 
-    print 'Enter person ID: '
-
-    id = gets.chomp.to_i
-
-    @persons.each do |person|
-      next unless person.id == id
-
-      person.rentals.each do |rental|
-        puts "Date: #{rental.date}, Book: \"#{rental.book.title}\" by #{rental.book.author} "
-      end
-    end
+    puts
   end
 
   def add_rental
-    puts 'Select a book from the following list by number'
+    puts 'Please select a book from the following list by number'
 
-    list_books(show_index: true)
+    @books.each_with_index { |book, index| puts "#{index}) Title: \"#{book.title}\", Author: #{book.author}" }
 
-    book = gets.chomp.to_i
+    book_id = gets.chomp.to_i
 
-    puts 'Invalid input!' if !(book.is_a? Integer) && book >= @books.length
+    puts 'Please select a person from the following list by number (not id)'
 
-    puts 'Select a person from the following list by number (not id)'
+    @people.each_with_index do |person, index|
+      puts "#{index}) [#{person.class}] Name: #{person.name}, Id: #{person.id}, Age: #{person.age}"
+    end
 
-    list_people(show_index: true)
+    person_id = gets.chomp.to_i
 
-    person = gets.chomp.to_i
-
-    puts 'Invalid input!' if !(person.is_a? Integer) && person >= @people.length
-
-    print 'Please enter the date: '
+    print 'Date: '
 
     date = gets.chomp.to_s
 
-    Rental.new(date, @books[book], @persons[person])
+    rental = Rental.new(date, @people[person_id], @books[book_id])
+
+    @rentals << rental
+
+    save_rental(date, person_id, book_id)
 
     puts 'Rental created successfully'
+
+    puts
+
+    puts
   end
+
+  def list_rentals_by_person_id
+    print 'ID of person: '
+
+    id = gets.chomp.to_i
+
+    puts 'Rentals:'
+
+    @rentals.each do |rental|
+      puts "Date: #{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}" if rental.person.id == id
+    end
+
+    puts
+
+    puts
+  end
+
+  def load_preserve_data
+    load_people @people
+
+    load_books @books
+
+    load_rentals @rentals
+  end
+
+  # def show_data
+
+  #   p @people
+
+  #   p @books
+
+  #   p @rentals
+
+  # end
 end
