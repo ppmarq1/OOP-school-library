@@ -85,6 +85,10 @@ end
 def main
   app = App.new
 
+  app.load_preserve_data
+
+  # app.show_data
+
   run
 
   message_menu app

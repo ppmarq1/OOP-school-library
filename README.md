@@ -6,7 +6,7 @@ In this project, we built an OOP school library app developed in Ruby. The app a
 
 - Add new students or teachers.
 - Add new books.
-- Save records of who borrowed a given book and when.
+- Save records of who borrowed a given book and when..
 
 
 

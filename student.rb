@@ -1,20 +1,22 @@
-require_relative './person'
+# rubocop: disable Style/OptionalBooleanParameter
+require './person'
 
 class Student < Person
-  attr_reader :classroom
+  attr_reader :classroom, :parent_permission
 
-  def initialize(classroom, age, name = 'Unknown', parent_permission: true)
-    super(age, parent_permission: parent_permission)
+  def initialize(classroom, age, name = 'Unknown', parent_permission = true)
+    super(age, name, parent_permission)
     @classroom = classroom
-    @name = name
   end
 
   def play_hooky
-    '¯\(ツ)/¯'
+    "¯\(ツ)/¯"
   end
 
   def classroom=(classroom)
     @classroom = classroom
-    classroom.students << self unless classroom.students.include?(self)
+    classroom.students.push(self)
   end
 end
+
+# rubocop: enable Style/OptionalBooleanParameter
