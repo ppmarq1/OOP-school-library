@@ -12,5 +12,12 @@
     "name": "Pedro",
     "age": 15,
     "parent_permission": true
+  },
+  {
+    "type": "Teacher",
+    "specialization": "Portuguese",
+    "name": "Paula",
+    "age": 45,
+    "parent_permission": true
   }
 ]
