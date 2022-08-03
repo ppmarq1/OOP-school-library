@@ -8,4 +8,4 @@ describe CapitalizeDecorator do
   it 'should CAPS person name' do
     expect(@capitalize.correct_name).to eq 'SILVAMARQUES'
   end
-end 
+end
