@@ -48,3 +48,13 @@ def message_menu(myapp)
   choice = gets.chomp
   menu(choice, myapp)
 end
+
+def main
+  app = App.new
+  app.load_preserve_data
+  # app.show_data
+  run
+  message_menu app
+end
+main
+# rubocop:enable Metrics
