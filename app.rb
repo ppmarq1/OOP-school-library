@@ -148,14 +148,14 @@ class App
   def add_rental
     puts 'Please select a book from the following list by number'
 
-    @books.each_with_index { |book, index| puts "#{index}) Title: \"#{book.title}\", Author: #{book.author}" }
+    @books.each_with_index { |book, index| puts "#{index} Title: \"#{book.title}\", Author: #{book.author}" }
 
     book_id = gets.chomp.to_i
 
     puts 'Please select a person from the following list by number (not id)'
 
     @people.each_with_index do |person, index|
-      puts "#{index}) [#{person.class}] Name: #{person.name}, Id: #{person.id}, Age: #{person.age}"
+      puts "#{index} [#{person.class}] Name: #{person.name}, Id: #{person.id}, Age: #{person.age}"
     end
 
     person_id = gets.chomp.to_i
