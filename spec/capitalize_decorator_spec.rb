@@ -1,4 +1,4 @@
-require './capitalize_decorator'
+require '../capitalize_decorator'
 require './person'
 
 describe CapitalizeDecorator do
